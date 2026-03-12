@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoalStream Pro</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -12,30 +12,63 @@
             <h1>GoalStream Dashboard</h1>
         </header>
 
-        <section style="background: var(--card); padding: 25px; border-radius: 16px; margin-bottom: 40px; border: 1px solid #334155;">
+        <section class="goal-card create-goal-section">
             <h3>Create a Strategic Goal</h3>
             <form id="goalForm" enctype="multipart/form-data">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <input type="text" name="title" placeholder="Goal Title (e.g. Save for Macbook)" required>
-                    <select name="category">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" placeholder="e.g. Save for Macbook" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" id="categorySelect">
                         <option value="Financial">Financial</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Health">Health</option>
                         <option value="Personal">Personal</option>
                     </select>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <input type="number" name="target" placeholder="Target Amount" required>
-                    <input type="file" name="image" accept="image/*">
+
+                <div class="form-group" id="dynamicFieldGroup">
+                    <label id="dynamicLabel">Target Amount</label>
+                    <input type="number" name="target" id="dynamicInput" placeholder="Enter amount" required>
                 </div>
-                <button type="submit" style="margin-top: 10px;">Create Goal</button>
+
+                <div class="form-group">
+                    <label>Upload Image</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="image" accept="image/*">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Goal</button>
             </form>
         </section>
 
-        <div id="goalGrid" class="goal-grid">
-            </div>
+        <div id="goalGrid" class="goal-grid"></div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div id="editModal" class="modal">
+        <div class="modal-content goal-card">
+            <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            <h3>Edit Goal</h3>
+            <form id="editForm">
+                <input type="hidden" name="id" id="editId">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" id="editTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" id="editCategory">
+                        <option value="Financial">Financial</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
